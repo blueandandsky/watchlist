@@ -1,0 +1,64 @@
+第二章 Hello,Flask!
+    简介：
+        Flask是典型的微框架，仅保留了核心功能：请求相应处理和模版渲染。这两类功能分别有Werkzeug（WSGI工具库）完成和Jinja（模版渲染库）完成，Flask包装了这两个依赖。
+
+    1.主页(pycharm 创建 flask项目 会自动生成app.py文件)
+        app.py 程序主页
+            from flask import Flask
+            app = Flask(__name__)
+            @app.route('/')
+            def hello():
+                return 'xxxxx'
+
+        注：在命令行窗口执行flask run程序启动命令，Flask使用内置开发服务器运行程序，默认监听本地5000端口，访问localhost:5000 访问程序主页。内置开发服务器只能用于开发。
+
+    2.解剖
+        1.从flask包导入Flask类，实例化这个类，创建一个程序对象 app：
+            from flask import Flask
+            app = Flask(__name__)
+        2.注册一个处理函数，处理某个请求的处理函数，即视图函数。
+            "注册"是给这个函数带上一个app.route()装饰器。浏览器访问这个url时，会触发这个函数。
+
+        3.整个请求处理过程：
+            1.访问http://localhost:5000/；
+            2.服务器解析请求，调用对应的处理函数；
+            3.获取函数返回值，处理后返回客户端；
+            4.浏览器接受相应，将其显示在窗口上。
+
+    3.程序发现机制
+        如果把app.py保存成hello.py或其他名称，flask run命令会有错误提示。因为Flask默认会假设你把程序储存在名为app.py或wsgi.py文件中。使用其他名称，就要设置系统环境变量FLASK_APP来来告诉Flask要启动哪个程序。
+
+    4.管理环境变量
+        启动Flask程序，通常有两个环境变量：FLASK_APP、FLASK_ENV
+            FLASK_APP:见程序发现机制
+            FLASK_ENV:用来设置程序运行的环境，默认production。我们需要开启调试模式，将其设为development。调试模式开启后，当程序出错，浏览器页面上会显示错误信息；代码变动后，程序自动加载。
+
+        设置环境变量：
+            1.安装管理系统环境变量的python—dotenv，避免每次打开新终端都要设置环境。
+            pipenv install python-dotenv
+            2.Flask会从项目根目录.flaskenv和.env文件读取环境变量并设置。创建两个文件
+            touch .env .flaskenv
+            3..flaskenv用来储存Flask命令行系统相关的公开环境变量。.env用来储存敏感数据。把.env添加到.gitignore中，让git忽略他。
+            4.在.flaskenv文件中，写入FLASK_ENV=development，开启调试模式。
+
+    5.修改视图函数返回值和url规则
+        1.可以返回一个HTML元素标记；
+        2.修改url路径；
+        3.一个视图函数可以绑定多个url，通过附加多个装饰器实现；
+        4.在url中定义变量部分；app.route('/user/<name>')；
+        5.修改视图函数名。视图函数名可以作为代表某个路由的端点(endpoint)，同时用来生成url。Flask提供url_for函数生成url，第一个参数是端点值，默认视图函数名称。见app.py中test_url_for()。
+
+        @app.route('/')
+        @app.route('/index')
+        @app.route('/home')
+        def hello_world():
+            return '<h1>Hellow Totoro!</h1><img src="http://helloflask.com/totoro.gif">'
+
+        @app.route('/user/<name>')
+        def user_page(name):
+            return "User:%s" % name
+
+    另：
+        1.Flask支持url规则字符串里对变量设置处理器，/user/<int:number>,变量number处理成整型，变量值接受传入数字。
+        2.一些变量和函数(如url_for())只能在特定的情况在能正确的执行。
+        3..开头的文件默认会被隐藏。
