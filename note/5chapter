@@ -1,0 +1,38 @@
+第五章 数据库
+    简介：
+        关系型数据库SQLite，基于文件，不需要单独启动数据库服务器，适合在开发时使用，或是在数据库操作简单、访问量低的程序使用。
+
+    1.使用SQLAlchemy操作数据库
+    https://www.sqlalchemy.org/
+
+    python数据库工具--SQLAlchemy简化数据库操作，借助SQLAlchemy，通过定义Python类来表示数据库里的一张表，通过对这个类进行这种操作来带代替写sql语句
+
+    使用Flask第三方扩展flask-sqlalchemy，集成SQLAlchemy
+    https://flask-sqlalchemy.palletsprojects.com/en/2.x/
+        1.安装 pipenv install flask-sqlalchemy
+        2.大部分扩展都要有一个初始化操作，需要导入扩展类，实例化并传入flask程序实例
+            from flask_sqlalchemy import SQLAlchemy
+            app = Flask(__name__)
+            db = SQLAlchemy(app)
+
+    2.设置数据库URI
+        Flask.config字典，一个统一写入和获取Flask配置变量的接口。配置变量名必须大写，写入配置语句一般会放到扩展类实例化语句前。
+        详见28页
+
+        Flask内置配置变量：http://docs.jinkan.org/docs/flask/config.html
+        Flask-sqlalchemy提供的配置变量：https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/
+
+    3.创建数据库模型
+        编写模型类的限制：
+            1.模型类要声明集成db.Model；
+            2.每个类属性都要实例化db.Column，参数为字段的类型；
+            3.在db.Column()中添加额外的参数可以对字段进行设置。（primary_key，nullable等）
+
+    4.创建数据库
+        详见29页
+
+    5.创建、读取、更新、删除
+        详见30页
+
+    进阶提示：
+        flask-sqlalchemy的使用和单独使用sqlalchemy有一些不同。

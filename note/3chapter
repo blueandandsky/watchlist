@@ -1,0 +1,30 @@
+第三章 模版
+    简介：
+        包含变量和运算逻辑的HTML或其他格式的文本叫做模版。
+        执行这些变量替换和逻辑运算工作过程成为渲染，模版渲染引擎--Jinja2。
+        Flask从程序实例所在模块统计目录的templates文件夹中寻找模版。
+
+    1.模版基本语法
+        Jinja2语法与Python大致相同。详见模版文件
+        常用的三种定届符：
+            {{ xxx }}标记边聊
+            {% xxx %}标记语句，if、for等
+            {# xxx #}注释语句
+
+    2.编辑主页模版
+        Jinja2 过滤器语法形式：
+            {{变量|过滤器}}
+        擦看所有可用过滤器：http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-filters
+
+    3.准备虚拟数据
+        使用render_template()函数渲染，必传参数为模版文件路径，还要把模版内部使用的变量通过关键字传入这个函数。
+        @app.route('/')
+        def index():
+            return render_template('index.html', name=name, movies=movies)
+
+    进阶提示：
+        Faker可以实现自动生成虚拟数据。https://github.com/joke2k/faker；
+        Jinja2 文档：http://jinja.pocoo.org/docs/2.10/templates/。
+
+
+

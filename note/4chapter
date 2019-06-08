@@ -1,0 +1,25 @@
+第四章 静态文件
+    简介：
+        静态文件：指内容不需要动态生成的文件，如图片、css、js等；
+        在Flask中，创建一个static文件夹来保存静态文件，它和程序模块、template文件夹同一级目录。
+
+    1.生成静态文件url
+        模版文件中，引入静态文件需要给出资源所在url。
+
+        静态文件的url可以通过Flask的url_for()函数来生成。需要传入的端点值是static，同时使用filename参数来传入相对于static文件夹的文件路径。
+        <img alt="Walking Totoro" class="totoro" src="{{ url_for('static',filename='images/totoro.gif') }}">
+
+        注：在Python中，url_for()函数徐亚盘从flask包中导入，而模版中则可以直接使用，Flask把一些常见的函数和对象添加到了模版上下文（环境）中。
+
+    2.添加Favicon
+        添加头像图片
+
+    3.添加图片
+        详见模版index.html
+
+    4.添加css
+        详见静态文件style.css
+
+    进阶提示：
+        前端框架 Bootstrap、Semantic—UI、Foundation。
+        Bootstrap—Flask(https://github.com/greyli/bootstrap-flask)简化Flask项目里使用Bootstrap4的步骤
