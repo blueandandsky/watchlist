@@ -1,2 +1,22 @@
 第六章 模版优化
     1.自定义错误页面
+        app.errorhandler()装饰器注册一个错误处理函数，作用和视图函数类似。传入参数为错误代码（404，400，500等）
+        @app.errorhandler(404)
+        def page_not_found(e):
+            return render_template('errors/404.html'), 404
+
+    2.模版上下文处理函数
+        使用app.context_processor 装饰器注册一个模版上下文处理函数，该函数返回的变量将会同一注入到每一个模版的上下文环境中。可以直接在模版中使用。
+        @app.context_processor
+        def inject_user():
+            from watchlist.models import User
+            user = User.query.first()
+            return dict(user=user)
+
+    3.使用模版集成组织模版
+        父模版（基模版）见base.html，在需要子模版中追加或重写的部分可以定义成块（block）。{% block 块名称 %} 作为开始标记，{% endblock %} 或 {% endblock 块名称 %} 作为结束标记。
+        子模版，使用extends标签声明集成某个模版。定义相应的块，追加或重写。见index.html等
+
+        如果追加内容，可以在子块中使用super()声明，即{{ super () }}
+
+

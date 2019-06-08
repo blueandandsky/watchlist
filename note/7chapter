@@ -1,0 +1,23 @@
+第七章 表单
+    编写表单：
+        1.<form> 中method不指定默认GET，get容易导致数据泄漏，不使用于包含大量数据的情况；
+        2.<input> 元素必须要指定那么属性，否则无法提交数据，后段也无法获取。
+
+    1.请求对象
+        Flask在请求触发后把请求信息放到requeat对象里，只能在视图函数内部调用，包含了请求相关的所有信息。
+
+    2.flash消息
+        flash()函数用来在视图函数里向模版传递提示消息，get_flashed_messages() 函数则用来在模版中获取提示消息。
+        flash('Invalid username or password.')
+
+        flash 函数在内部会把消息存储到Flask提供的session对象中，session用在请求间存储数据，会把数据签名后存储到浏览器的Cookie中，因此要设置签名所需的密钥。
+        app.config['SECRET_KEY'] = 'dev'
+
+        一般情况下，通过第三方库来实现表单数据验证工作（WTForms）
+
+    3.重定向响应
+        redirect('http:xxxxx')
+
+    进阶提示：
+        1.集成WTForms的扩展Flask—WTF来简化表单处理
+        2.CSRF
